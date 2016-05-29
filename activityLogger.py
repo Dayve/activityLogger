@@ -195,9 +195,10 @@ class App:
 				  name, fieldName, cdate, rdate, elapsedTime), end="")
 
 	def printHelpFile(self):
-			#printing help file
 			helpFile = open('help.txt', 'r')
-			close(helpFile)
+			helpContent = helpFile.read()
+			print(helpContent)
+			helpFile.close()
 
 	def strToDate(self, dateString):
 			tempDate = []
@@ -273,7 +274,7 @@ class App:
 			return elapsedTimeStr
 
 	def updateActivity(self, commandName):
-		activity = self.root.findall('activity')
+		activities = self.root.findall('activity')
 
 		try:
 			listOfIds = self.cmdArgs[commandName]['i']
@@ -301,7 +302,7 @@ class App:
 			return
 
 	def printXML(self):
-			print(self.etree.tostring(self.root))
+			print(etree.tostring(self.root))
 	def saveXML(self):
 			self.tree.write('activityLog.xml')
 app = App()
