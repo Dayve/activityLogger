@@ -25,44 +25,24 @@ class App:
 		print("If you don't know any commands, enter help")
 	def getCommand(self):
 		rawCommand = input('>')
-		temp = ''
 		readingArgs = False
 		lastCommand = ''
 		lastParameter = ''
 
 		i = 0
-		for c in rawCommand:
-			i += 1
-			if c == ' ':
-				break
-			temp += c	
+		splittedInput = rawCommand.split()
 
-		self.commands.put(temp)
-		self.cmdArgs.setdefault(temp, {})
-		lastCommand = temp
-		temp = ''
+		self.commands.put(splittedInput[0])
+		self.cmdArgs.setdefault(splittedInput[0], {})
+		lastCommand = splittedInput[0]
 		
 		try:
-			for c in rawCommand[i:]:
-				if c == ' ' and len(temp) != 0:
-					if readingArgs:
-						self.cmdArgs[lastCommand][lastParameter].append(temp)
-						temp = ''
-					else:
-						self.cmdArgs[lastCommand].setdefault(temp, [])
-						lastParameter = temp
-						temp = ''
-						readingArgs = True
-				elif c == '-':
-					readingArgs = False
+			for word in splittedInput[1:]:
+				if word[0] == '-':
+					self.cmdArgs[lastCommand].setdefault(word[1:], [])
+					lastParameter = word[1:]
 				else:
-					temp += c
-
-			if len(temp) > 0:
-				if readingArgs:
-					self.cmdArgs[lastCommand][lastParameter].append(temp)
-				elif len(lastCommand) == 0:
-					self.commands.put(temp)
+					self.cmdArgs[lastCommand][lastParameter].append(word)
 		except KeyError:
 			print('Undefined key')
 			return 
