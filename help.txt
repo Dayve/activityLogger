@@ -1,0 +1,6 @@
+list 
+del -f id1, id2, id3...
+up -i id1, id2, id3...
+add
+save
+xml
