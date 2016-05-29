@@ -139,6 +139,9 @@ class App:
 		activityElements = {}
 		i = 0
 		for dataField in activityData:
+			if dataField.text == None:
+				activityElements.setdefault(dataField.tag, '')
+			else:
 				activityElements.setdefault(dataField.tag, dataField.text)	
 		if len(activityElements) >= 4:
 			activityID = activityData.attrib["id"]
